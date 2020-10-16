@@ -1,0 +1,17 @@
+Amarelo
+Salvador
+Manaus 6
+Rio_de_Janeiro
+Sao_Paulo 1
+Porto_Alegre
+Curitiba 1 Joao_Pessoa 5
+Belo_Horizonte
+Recife 2
+Recife
+Brasilia 2
+Manaus
+Florianopolis 6
+Goiania
+Sao_Luis 4 Fortaleza 4
+Vitoria
+Brasilia 2

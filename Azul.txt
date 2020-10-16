@@ -1,0 +1,19 @@
+Azul
+Salvador
+Rio_de_Janeiro 2 Belo_Horizonte 1
+Rio_de_Janeiro
+Maceio 3
+Porto_Alegre
+Sao_Luis 5
+Belo_Horizonte
+Florianopolis 3
+Recife
+Goiania 4
+Manaus
+Maceio 6
+Goiania
+Vitoria 3
+Fortaleza
+Sao_Paulo 3 Joao_Pessoa 3
+Brasilia
+Florianopolis 2
