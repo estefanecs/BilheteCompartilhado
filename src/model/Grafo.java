@@ -107,7 +107,7 @@ public class Grafo {
      * @param nome - nome do vertice
      */
     public void addVertice(String nome) {
-        Vertice vertice = new Vertice(nome);
+        Cidade vertice = new Cidade(nome);
         vertices.add(vertice);
     }
 
@@ -120,11 +120,11 @@ public class Grafo {
      * @param nomeAresta - nome da aresta
      */
     public void addAresta(String nomeV1, String nomeV2, int peso,String nomeAresta){
-        Vertice v1 = vertices.procurarNo(nomeV1);
-        Vertice v2 = vertices.procurarNo(nomeV2);
+        Cidade v1 = vertices.procurarNo(nomeV1);
+        Cidade v2 = vertices.procurarNo(nomeV2);
         //Cria as arestas, com o peso e o vertice de destino
-        Aresta aresta1 = new Aresta(v1, peso,nomeAresta);
-        Aresta aresta2 = new Aresta(v2, peso,nomeAresta);
+        Trecho aresta1 = new Trecho(v1, peso,nomeAresta);
+        Trecho aresta2 = new Trecho(v2, peso,nomeAresta);
         //Adiciona nos vertices a aresta criada
         vertices.procurarNo(nomeV2).getAdjacencias().add(aresta1);
         vertices.procurarNo(nomeV1).getAdjacencias().add(aresta2);
@@ -136,7 +136,7 @@ public class Grafo {
      * @param nome - nome do vertice
      */
     public void removerVertice(String nome) {
-        Vertice removido = vertices.remove(nome);
+        Cidade removido = vertices.remove(nome);
         //Remove a referência do vertice removido, na lista de adjacencias dos vertices que se ligavam com ele
         No auxiliar = removido.getAdjacencias().getPrimeiro();
         while (auxiliar != null) {
@@ -199,19 +199,19 @@ public class Grafo {
             ArestaList caminho = new ArestaList();
             this.relacionarVertices(caminho); //Salva o caminho do ponto de coleta para todos os outros vertices     
             
-            Vertice verticeAtual;
+            Cidade verticeAtual;
             int pesoAtual;
-            int menorDistancia = caminho.get(getMinimo(caminho)).getConteudo().getPeso();
+            int menorDistancia = caminho.get(getMinimo(caminho)).getConteudo().getTempoVoo();
             /*Enquanto não visitar todos os vertices e a menor distância for diferente de 1000, procura o menor
             caminho para todos os vertices, independente de serem adjacentes ao ponto de coleta. */
             while (verticesVisitados < vertices.size() && menorDistancia != 1000) {
                 verticesVisitados++;
                 int indexMin = getMinimo(caminho);//posicao do elemento com menor peso 
-                menorDistancia = caminho.get(indexMin).getConteudo().getPeso(); //peso do menor elemento
+                menorDistancia = caminho.get(indexMin).getConteudo().getTempoVoo(); //peso do menor elemento
                 if (menorDistancia != 1000) {
                     //Atualiza a referência do vertice atual e do peso do mesmo, e altera para visitado
                     verticeAtual = vertices.get(indexMin).getConteudo(); //Salva o vertice atual
-                    pesoAtual = caminho.get(indexMin).getConteudo().getPeso(); //Salva o peso da aresta com o vertice atual
+                    pesoAtual = caminho.get(indexMin).getConteudo().getTempoVoo(); //Salva o peso da aresta com o vertice atual
                     vertices.get(indexMin).getConteudo().setVisitado(true); //Altera o vertice para visitado
                     ajustarVertices(verticeAtual, pesoAtual, caminho); //Atualiza os valores da lista de caminhos
                 }
@@ -230,17 +230,17 @@ public class Grafo {
      * @param caminho - lista de caminho
      */
     public void relacionarVertices(ArestaList caminho) {
-        Vertice verticeDestino = vertices.procurarNo(pontoPartida);
+        Cidade verticeDestino = vertices.procurarNo(pontoPartida);
         Node auxiliar = vertices.getPrimeiro();
-        Aresta aresta;
+        Trecho aresta;
         while (auxiliar != null) { //Enquanto não for o fim da lista
             //procura se o vertice atual é adjacente ao ponto de coleta
             int posicao = auxiliar.getConteudo().getAdjacencias().getPosicao(pontoPartida);
             if (posicao == -1) { //Se não for adjacente
                 //a aresta é salva com o valor 1000, o que indica que não há caminho do ponto de coleta para o vertice
-                aresta = new Aresta(verticeDestino, 1000,"semAdjacencia");
+                aresta = new Trecho(verticeDestino, 1000,"semAdjacencia");
             } else { //Se forem adjacentes, salva a aresta contendo o ponto de coleta como destino e o peso entre eles
-                aresta = new Aresta(verticeDestino, auxiliar.getConteudo().getAdjacencias().get(posicao).getConteudo().getPeso(),auxiliar.getConteudo().getAdjacencias().get(posicao).getConteudo().getNome());
+                aresta = new Trecho(verticeDestino, auxiliar.getConteudo().getAdjacencias().get(posicao).getConteudo().getTempoVoo(),auxiliar.getConteudo().getAdjacencias().get(posicao).getConteudo().getCompanhia());
             }
             caminho.add(aresta); //Adiciona a aresta
             auxiliar = auxiliar.getNext(); //Aponta para o próximo nó da lista de vertices
@@ -258,8 +258,8 @@ public class Grafo {
         int posicao = 0;
         for (int i = 0; i < vertices.size(); i++) { //percorre toda lista
             //Se o nó atual for menor, salva o peso e a posição
-            if (!vertices.get(i).getConteudo().isVisitado() && caminho.get(i).getConteudo().getPeso() < valorMinimo) {
-                valorMinimo = caminho.get(i).getConteudo().getPeso();
+            if (!vertices.get(i).getConteudo().isVisitado() && caminho.get(i).getConteudo().getTempoVoo() < valorMinimo) {
+                valorMinimo = caminho.get(i).getConteudo().getTempoVoo();
                 posicao = i;
             }
         }
@@ -274,7 +274,7 @@ public class Grafo {
      * @param pesoAtual - peso para chegar até o vertice atual
      * @param caminho - lista de caminho
      */
-    private void ajustarVertices(Vertice verticeAtual, int pesoAtual, ArestaList caminho) {
+    private void ajustarVertices(Cidade verticeAtual, int pesoAtual, ArestaList caminho) {
         int coluna = 0;
         int peso = 0;
         while (coluna < vertices.size()) { //Enquanto não percorrer a lista toda
@@ -282,15 +282,15 @@ public class Grafo {
                 //procura a posição do vertice atual(Se esse vertice é adjacente ao atual)
                 int posicao = vertices.get(coluna).getConteudo().getAdjacencias().getPosicao(verticeAtual.getNome());
                 if (posicao != -1) { //Se forem adjacentes, salva o peso entre ele e o vertice atual 
-                    peso = vertices.get(coluna).getConteudo().getAdjacencias().get(posicao).getConteudo().getPeso();
+                    peso = vertices.get(coluna).getConteudo().getAdjacencias().get(posicao).getConteudo().getTempoVoo();
                 } else {
                     peso = 1000;
                 }
                 int pesoAtualizado = peso + pesoAtual; //soma o peso para chegar até ele partindo do ponto de coleta
-                int pesoAntigo = caminho.get(coluna).getConteudo().getPeso();
+                int pesoAntigo = caminho.get(coluna).getConteudo().getTempoVoo();
                 if (pesoAtualizado < pesoAntigo) { //Se o peso atualizado for menor do que o anterior
                     caminho.get(coluna).getConteudo().setDestino(verticeAtual); //altera o ponto de destino até ele
-                    caminho.get(coluna).getConteudo().setPeso(pesoAtualizado); //altera o peso do caminho
+                    caminho.get(coluna).getConteudo().setTempoVoo(pesoAtualizado); //altera o peso do caminho
                 }
             }
             coluna++; //passa para o próximo vertice
@@ -314,18 +314,18 @@ public class Grafo {
     private void rotaPartidaADestino(ArestaList caminho) {
         int posicao = vertices.getPosicao(pontoChegada);
         No auxiliar = caminho.get(posicao);
-        int tempoRota = caminho.get(posicao).getConteudo().getPeso(); //soma o tempo para chegar no ponto de chegada
+        int tempoRota = caminho.get(posicao).getConteudo().getTempoVoo(); //soma o tempo para chegar no ponto de chegada
         rota= pontoPartida;
         String invertida = "->" + pontoChegada;
         //Enquanto o vertice destino não for o ponto de coleta e o grafo não for desconexo
-        while (auxiliar.getConteudo().getDestino().getNome().compareToIgnoreCase(pontoPartida) != 0 && auxiliar.getConteudo().getPeso() != 1000) {
+        while (auxiliar.getConteudo().getDestino().getNome().compareToIgnoreCase(pontoPartida) != 0 && auxiliar.getConteudo().getTempoVoo() != 1000) {
             String stringAuxiliar = "->" + auxiliar.getConteudo().getDestino().getNome(); //escreve o vertice destino
             invertida = stringAuxiliar.concat(invertida);
             //Aponta para o vertice destino na lista
             posicao = vertices.getPosicao(auxiliar.getConteudo().getDestino().getNome());
             auxiliar = caminho.get(posicao);
         }
-        if (auxiliar.getConteudo().getPeso() != 1000) //Se é possível chegar no ponto de coleta, escreve o mesmo
+        if (auxiliar.getConteudo().getTempoVoo() != 1000) //Se é possível chegar no ponto de coleta, escreve o mesmo
         {
             rota = rota.concat(invertida /*+ "\nO tempo do trajeto é de " + tempoRota + " horas"*/);
         } else {
@@ -345,13 +345,13 @@ public class Grafo {
     public String listarRotas(){
         String texto="";
         int count=0;
-        Vertice origemAux;
+        Cidade origemAux;
         for(int i=0; i<vertices.size();i++){
             origemAux = vertices.get(i).getConteudo();
             for(int j=0; j<origemAux.getAdjacencias().size(); j++){
                 count++;
                 texto+=(count+". "+origemAux.getNome()+"->"+origemAux.getAdjacencias().get(j).getConteudo().getDestino().getNome()+
-                        " - "+ origemAux.getAdjacencias().get(j).getConteudo().getNome()+"\n");
+                        " - "+ origemAux.getAdjacencias().get(j).getConteudo().getCompanhia()+"\n");
             }
         }
         return texto;

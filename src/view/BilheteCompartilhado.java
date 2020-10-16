@@ -10,9 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import model.ComprasPassagens;
-import static model.ComprasPassagens.locais;
 import model.Grafo;
-import model.Vertice;
+import model.Cidade;
+import static model.ComprasPassagens.trechos;
 
 /**
  *
@@ -26,7 +26,7 @@ public class BilheteCompartilhado {
     public static void main(String[] args) throws IOException{
         Grafo grafo = new Grafo();
         grafo.importarArquivo("Cidades.txt");
-        List<Vertice> locais = new ArrayList<>();
+        List<Cidade> locais = new ArrayList<>();
     //---------------------------------------------------------------------------------------------------
         Scanner escanear= new Scanner(System.in);
         System.out.println("Cidades disponíveis para voos");
@@ -56,7 +56,7 @@ public class BilheteCompartilhado {
         for (int i = 0; i < adjacencia.length; i++) {//Até o fim do vetor
            String nomeVertice= adjacencia[i]; //indica o nome do vertice
            int posicao= grafo.getVertices().getPosicao(nomeVertice); //pega a posicao do vertice na lista
-           Vertice vertice= grafo.getVertices().get(posicao).getConteudo(); //pega a instancia do vertice
+           Cidade vertice= grafo.getVertices().get(posicao).getConteudo(); //pega a instancia do vertice
             locais.add(vertice);
         }    
         System.out.println("A compra da sua passagem será realizada neste exato momento");

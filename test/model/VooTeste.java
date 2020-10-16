@@ -19,40 +19,40 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Classe teste para a análise na criação de objetos do tipo Aresta e alterações
- * em seus atributos
+ * Classe teste para a análise na criação de objetos do tipo Trecho e alterações
+ em seus atributos
  *
  * @author Estéfane Carmo de Souza
  */
-public class ArestaTeste {
+public class VooTeste {
 
-    private Vertice v1, v2, v3;
-    private Aresta aresta;
+    private Cidade v1, v2, v3;
+    private Trecho aresta;
 
     @Before
     public void setUp() throws Exception {
-        v1 = new Vertice("A");
-        v2 = new Vertice("B");
-        v3 = new Vertice("C");
+        v1 = new Cidade("A");
+        v2 = new Cidade("B");
+        v3 = new Cidade("C");
     }
 
     @Test
     public void testeBasico() {
-        aresta = new Aresta(v1, 10,"aresta1");
+        aresta = new Trecho(v1, 10,"aresta1");
 
         assertEquals(v1, aresta.getDestino());
-        assertEquals(10, aresta.getPeso());
-        assertEquals("aresta1", aresta.getNome());
+        assertEquals(10, aresta.getTempoVoo());
+        assertEquals("aresta1", aresta.getCompanhia());
         
         aresta.setDestino(v2);
         assertEquals(v2, aresta.getDestino());
-        assertEquals(10, aresta.getPeso());
+        assertEquals(10, aresta.getTempoVoo());
 
         aresta.setDestino(v3);
         assertEquals(v3, aresta.getDestino());
 
-        aresta.setPeso(19);
-        assertEquals(19, aresta.getPeso());
+        aresta.setTempoVoo(19);
+        assertEquals(19, aresta.getTempoVoo());
 
     }
 

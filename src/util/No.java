@@ -14,7 +14,7 @@
  */
 package util;
 
-import model.Aresta;
+import model.Trecho;
 
 /**
  * Classe para objetos do tipo No, que contém seus atributos e métodos. Possui
@@ -28,13 +28,13 @@ import model.Aresta;
  */
 public class No {
 
-    private Aresta conteudo;
+    private Trecho conteudo;
     private No next;
 
     public No() {
     }
 
-    public No(Aresta conteudo) {
+    public No(Trecho conteudo) {
         this.conteudo = conteudo;
     }
 
@@ -52,7 +52,7 @@ public class No {
      *
      * @return Object - O conteúdo
      */
-    public Aresta getConteudo() {
+    public Trecho getConteudo() {
         return conteudo;
     }
 
@@ -70,7 +70,7 @@ public class No {
      *
      * @param novoConteudo - O novo conteúdo do nó
      */
-    public void setConteudo(Aresta novoConteudo) {
+    public void setConteudo(Trecho novoConteudo) {
         conteudo = novoConteudo;
     }
 }

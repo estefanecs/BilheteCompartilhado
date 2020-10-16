@@ -14,8 +14,8 @@
  */
 package util;
 
-import model.Aresta;
-import model.Vertice;
+import model.Trecho;
+import model.Cidade;
 
 /**
  * Classe para objetos do tipo ArestaList. Esta classe, possui uma referência
@@ -73,7 +73,7 @@ public class ArestaList {
      *
      * @param obj - Objeto a ser adicionado
      */
-    public void add(Aresta obj) {
+    public void add(Trecho obj) {
         No novoNo = new No(obj); //Novo nó a ser adicionado
         if (isEmpty()) {
             primeiro = novoNo;
@@ -139,9 +139,9 @@ public class ArestaList {
      * Método para a remorção de um vertice cujo o nome foi indicado
      *
      * @param nome - nome do vertice a ser removido
-     * @return Vertice - o vertice removido
+     * @return Cidade - o vertice removido
      */
-    public Vertice remove(String nome) {
+    public Cidade remove(String nome) {
         if (!this.isEmpty()) {
             No aux = primeiro;
             No aux2 = primeiro;

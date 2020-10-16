@@ -23,7 +23,7 @@ import java.util.Scanner;
  * @author Messias Jr. Lira da Silva
  */
 public class ComprasPassagens extends Thread {
-    public static List<Vertice> locais = new ArrayList<>();
+    public static List<Cidade> trechos = new ArrayList<>();
     private Grafo grafo = new Grafo();
     
     @Override
@@ -50,16 +50,16 @@ public class ComprasPassagens extends Thread {
         System.out.println("Indique qual o número da opção da rota que você escolheu");
         int numCaminho =escanear.nextInt();
         
-        //Separa a string rota em partes e adiciona o vertice na lista de locais
+        //Separa a string rota em partes e adiciona o vertice na lista de trechos
         String[] adjacencia = rota[numCaminho].split("->");//separa em partes
         for (int i = 0; i < adjacencia.length; i++) {//Até o fim do vetor
            String nomeVertice= adjacencia[i]; //indica o nome do vertice
            int posicao= grafo.getVertices().getPosicao(nomeVertice); //pega a posicao do vertice na lista
-           Vertice vertice= grafo.getVertices().get(posicao).getConteudo(); //pega a instancia do vertice
-            locais.add(vertice);
+           Cidade vertice= grafo.getVertices().get(posicao).getConteudo(); //pega a instancia do vertice
+           trechos.add(vertice); //adiciona na lista de trechos
         }    
         System.out.println("A compra da sua passagem será realizada neste exato momento");
-        
+       
         //FUNCAO COMPRA DA PASSAGEM
         
     }

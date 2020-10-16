@@ -14,7 +14,7 @@
  */
 package util;
 
-import model.Vertice;
+import model.Cidade;
 
 /**
  * Classe para objetos do tipo Node, que contém seus atributos e métodos. Possui
@@ -28,13 +28,13 @@ import model.Vertice;
  */
 public class Node {
 
-    private Vertice conteudo;
+    private Cidade conteudo;
     private Node next;
 
     public Node() {
     }
 
-    public Node(Vertice conteudo) {
+    public Node(Cidade conteudo) {
         this.conteudo = conteudo;
     }
 
@@ -52,7 +52,7 @@ public class Node {
      *
      * @return Object - O conteúdo
      */
-    public Vertice getConteudo() {
+    public Cidade getConteudo() {
         return conteudo;
     }
 
@@ -70,7 +70,7 @@ public class Node {
      *
      * @param novoConteudo - O novo conteúdo do nó
      */
-    public void setConteudo(Vertice novoConteudo) {
+    public void setConteudo(Cidade novoConteudo) {
         conteudo = novoConteudo;
     }
 }

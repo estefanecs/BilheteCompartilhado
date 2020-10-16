@@ -17,7 +17,7 @@ package AllTests;
 import util.ArestaListTeste;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-import model.ArestaTeste;
+import model.VooTeste;
 import model.VerticeTeste;
 import model.GrafoTeste;
 import util.VerticeListTest;

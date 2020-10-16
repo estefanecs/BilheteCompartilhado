@@ -22,19 +22,19 @@ import util.ArestaList;
  * possui.
  *
  * Exemplo de uso:
- *
- * Vertice vertice= new Vertice(nome, tipo);
+
+ Cidade vertice= new Cidade(nome, tipo);
  *
  * @author Estéfane Carmo de Souza 
  * @author Messias Jr. Lira da Silva
  */
-public class Vertice {
+public class Cidade {
 
     private String nome;
     private boolean visitado;
     private ArestaList adjacencias;
 
-    public Vertice(String nome) {
+    public Cidade(String nome) {
         this.nome = nome;
         this.visitado = false;
         this.adjacencias = new ArestaList();

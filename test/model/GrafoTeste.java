@@ -208,7 +208,7 @@ public class GrafoTeste {
         assertEquals("G", grafo.getVertices().get(6).getConteudo().getNome());
         assertEquals("H", grafo.getVertices().get(7).getConteudo().getNome());
 
-        //Remorção da Aresta AH
+        //Remorção da Trecho AH
         assertEquals(2, grafo.getVertices().procurarNo("A").getAdjacencias().size());
         assertEquals(3, grafo.getVertices().procurarNo("H").getAdjacencias().size());
 
@@ -220,7 +220,7 @@ public class GrafoTeste {
         assertEquals(1, grafo.getVertices().procurarNo("A").getAdjacencias().size());
         assertEquals(2, grafo.getVertices().procurarNo("H").getAdjacencias().size());
 
-        //Remorção da Aresta CB
+        //Remorção da Trecho CB
         assertEquals(3, grafo.getVertices().procurarNo("C").getAdjacencias().size());
         assertEquals(4, grafo.getVertices().procurarNo("B").getAdjacencias().size());
 
@@ -232,7 +232,7 @@ public class GrafoTeste {
         assertEquals(2, grafo.getVertices().procurarNo("C").getAdjacencias().size());
         assertEquals(3, grafo.getVertices().procurarNo("B").getAdjacencias().size());
 
-        //Remorção da Aresta ED
+        //Remorção da Trecho ED
         assertEquals(2, grafo.getVertices().procurarNo("E").getAdjacencias().size());
         assertEquals(3, grafo.getVertices().procurarNo("D").getAdjacencias().size());
 
@@ -275,8 +275,8 @@ public class GrafoTeste {
 
         assertEquals(7, grafo.getVertices().size());
 
-        assertEquals("I, C, D, A\nO tempo do trajeto é de 15 minutos", grafo.calcularRota("I", "A"));
-        assertEquals("E, C, I\nO tempo do trajeto é de 8 minutos", grafo.calcularRota("E", "I"));
+        assertEquals("I->C->D->A\nO tempo do trajeto é de 15 horas", grafo.calcularRota("I", "A"));
+        assertEquals("E->C->I\nO tempo do trajeto é de 8 horas", grafo.calcularRota("E", "I"));
 
 
         grafo.removerAresta("B", "E");

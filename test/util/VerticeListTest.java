@@ -14,7 +14,7 @@
  */
 package util;
 
-import model.Vertice;
+import model.Cidade;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
@@ -25,21 +25,21 @@ import util.VerticeList;
 
 /**
  * Classe teste para a estrutura de dados lista, que armazena objetos do tipo
- * Vertice
+ Cidade
  *
  * @author Estéfane Carmo de Souza
  */
 public class VerticeListTest {
 
     private VerticeList list;
-    private Vertice vertice1, vertice2, vertice3;
+    private Cidade vertice1, vertice2, vertice3;
 
     @Before
     public void setUp() {
         list = new VerticeList();
-        vertice1 = new Vertice("A");
-        vertice2 = new Vertice("B");
-        vertice3 = new Vertice("C");
+        vertice1 = new Cidade("A");
+        vertice2 = new Cidade("B");
+        vertice3 = new Cidade("C");
 
     }
 

@@ -25,7 +25,7 @@ package util;
  * @author Estéfane Carmo de Souza 
  */
 import java.util.ArrayList;
-import model.Vertice;
+import model.Cidade;
 
 public class VerticeList {
 
@@ -51,11 +51,11 @@ public class VerticeList {
      * Método que procura o vertice com o nome indicado
      *
      * @param vertice - nome do vertice
-     * @return Vertice - o vertice encontrado
+     * @return Cidade - o vertice encontrado
      */
-    public Vertice procurarNo(String vertice) {
+    public Cidade procurarNo(String vertice) {
         Node auxiliar = primeiro;
-        Vertice encontrado = null;
+        Cidade encontrado = null;
         while (auxiliar != null) { //Enquanto não for o fim da lista
             if (auxiliar.getConteudo().getNome().compareToIgnoreCase(vertice) == 0) { //se o nó atual for o desejado
                 encontrado = auxiliar.getConteudo(); //encontrado é igual ao vertice encontrado
@@ -106,7 +106,7 @@ public class VerticeList {
      *
      * @param obj - Objeto a ser adicionado
      */
-    public void add(Vertice obj) {
+    public void add(Cidade obj) {
         Node novoNo = new Node(obj); //Novo nó a ser adicionado
         if (isEmpty()) {
             primeiro = novoNo;
@@ -152,9 +152,9 @@ public class VerticeList {
      * Método para a remorção de um vertice cujo o nome foi indicado
      *
      * @param nome - nome do vertice a ser removido
-     * @return Vertice - o vertice removido
+     * @return Cidade - o vertice removido
      */
-    public Vertice remove(String nome) {
+    public Cidade remove(String nome) {
         if (!this.isEmpty()) {
             Node aux = primeiro;
             Node aux2 = primeiro;

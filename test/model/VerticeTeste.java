@@ -21,19 +21,19 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Classe teste para a análise na criação de objetos do tipo Vertice e
- * alterações em seus atributos
+ * Classe teste para a análise na criação de objetos do tipo Cidade e
+ alterações em seus atributos
  *
  * @author Estéfane Carmo de Souza
  */
 public class VerticeTeste {
 
-    private Vertice vertice, vertice2;
+    private Cidade vertice, vertice2;
 
     @Before
     public void setUp() throws Exception {
-        vertice = new Vertice("D");
-        vertice2 = new Vertice("E");
+        vertice = new Cidade("D");
+        vertice2 = new Cidade("E");
     }
 
     @Test
@@ -48,7 +48,7 @@ public class VerticeTeste {
         vertice.setVisitado(false);
         assertFalse(vertice.isVisitado());
 
-        Aresta aresta = new Aresta(vertice2, 5,"novaAresta");
+        Trecho aresta = new Trecho(vertice2, 5,"novaAresta");
         vertice.getAdjacencias().add(aresta);
         assertFalse(vertice.getAdjacencias().isEmpty());
 

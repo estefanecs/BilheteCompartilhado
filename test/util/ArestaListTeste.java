@@ -14,8 +14,8 @@
  */
 package util;
 
-import model.Aresta;
-import model.Vertice;
+import model.Trecho;
+import model.Cidade;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
@@ -26,25 +26,25 @@ import util.ArestaList;
 
 /**
  * Classe teste para a estrutura de dados lista, que armazena objetos do tipo
- * Aresta
+ Trecho
  *
  * @author Estéfane Carmo de Souza
  */
 public class ArestaListTeste {
 
     private ArestaList list;
-    private Vertice v1, v2, v3;
-    private Aresta aresta1, aresta2, aresta3;
+    private Cidade v1, v2, v3;
+    private Trecho aresta1, aresta2, aresta3;
 
     @Before
     public void setUp() {
         list = new ArestaList();
-        v1 = new Vertice("A");
-        v2 = new Vertice("B");
-        v3 = new Vertice("C");
-        aresta1 = new Aresta(v1, 10,"aresta1");
-        aresta2 = new Aresta(v2, 5,"aresta2");
-        aresta3 = new Aresta(v3, 8,"aresta3");
+        v1 = new Cidade("A");
+        v2 = new Cidade("B");
+        v3 = new Cidade("C");
+        aresta1 = new Trecho(v1, 10,"aresta1");
+        aresta2 = new Trecho(v2, 5,"aresta2");
+        aresta3 = new Trecho(v3, 8,"aresta3");
     }
 
     /**
