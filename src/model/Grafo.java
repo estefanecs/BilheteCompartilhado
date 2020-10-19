@@ -21,6 +21,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import util.VerticeList;
 import util.No;
 import util.Node;
@@ -44,12 +45,11 @@ public class Grafo {
     private String pontoPartida;
     private String pontoChegada;
 
-    public Grafo() {
+    private Grafo(){
         vertices = new VerticeList();
         rota = null;
         pontoPartida = null;
         pontoChegada = null;
-
     }
 
     /**
@@ -332,6 +332,7 @@ public class Grafo {
             rota = "Não existem caminhos para " + pontoPartida;
         }
     }
+         
     /**
      * Método que remove todos os vertices do grafo
      */
@@ -428,6 +429,28 @@ public class Grafo {
                 ler.close(); //fecha o arquivo
             }
         }
+    }
+    
+    public void realizarCompra(List<String> locais){
+        for(int i=0; i<locais.size()-1;i++){
+           int posicaoC1= this.getVertices().getPosicao(locais.get(i));//pega a posicao do vertice na lista
+           int posicaoC2=this.getVertices().get(posicaoC1).getConteudo().getAdjacencias().getPosicao(locais.get(i+1));
+           int passagensDisponiveis= this.getVertices().get(posicaoC1).getConteudo().getAdjacencias().getTrecho(posicaoC2).getQuantPassagens();
+           if(passagensDisponiveis>0){
+               System.out.println("passagens antes da compra "+passagensDisponiveis);
+               //diminui a quantidade de passagens
+               this.getVertices().get(posicaoC1).getConteudo().getAdjacencias().getTrecho(posicaoC2).setQuantPassagens();
+               passagensDisponiveis= this.getVertices().get(posicaoC1).getConteudo().getAdjacencias().getTrecho(posicaoC2).getQuantPassagens();
+               System.out.println("A compra do trecho "+locais.get(i)+" a "+locais.get(i+1)+" foi reaizada");
+                //Poderia salvar essa pasagem em algum lugar né?
+                System.out.println("Restam " +passagensDisponiveis+" passagens disponiveis de "+locais.get(i)+" para "+locais.get(i+1));
+           }
+           else{
+               //Adiciona em uma lista de espera, mas quem tem a lista de espera?
+           }
+           
+        }
+        
     }
     
     

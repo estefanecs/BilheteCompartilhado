@@ -105,6 +105,25 @@ public class ArestaList {
             return aux;
         }
     }
+     /**
+     * Método que retorna uma aresta da lista, que está na posição indicada
+     *
+     * @param index - Posição do nó a ser buscado
+     * @return Trecho - O objeto encontrado
+     */
+    public Trecho getTrecho(int index) {
+        int posicao = 0; //indica a posição atual
+        No aux = primeiro; //variável para percorrer a lista
+        if (isEmpty() || index < 0 || index >= this.size()) {
+            return null;
+        } else { //Se o index for um número dentro do tamanho da lista 
+            while (posicao != index) { //Percorre até encontrar a posição
+                aux = aux.getNext();
+                posicao++;
+            }
+            return aux.getConteudo();
+        }
+    }
 
     /**
      * Método que verifica se a lista está vazia

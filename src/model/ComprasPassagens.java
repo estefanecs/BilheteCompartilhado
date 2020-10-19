@@ -14,17 +14,20 @@
  */
 package model;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author Estéfane Carmo de Souza
  * @author Messias Jr. Lira da Silva
  */
 public class ComprasPassagens extends Thread {
-    public static List<Cidade> trechos = new ArrayList<>();
-    private Grafo grafo = new Grafo();
+    public static List<String> trechos = new ArrayList<>();
+    private Grafo grafo= Grafo.getInstance();
     
     @Override
     public void run() { 
@@ -41,26 +44,26 @@ public class ComprasPassagens extends Thread {
         String verticePartida= grafo.getVertices().get(cidadePartida).getConteudo().getNome();
         String verticeDestino= grafo.getVertices().get(cidadeDestino).getConteudo().getNome();
        
-        ///FUNÇÃO QUE LISTA POSSIVEIS FORMAS DE CHEGAR ATE O DESTINO
-        /*
-        Deve vim sem numero
-        String[] rota= grafo.calcularRota(verticePartida,verticeDestino);
-        */
+        grafo.calcularRota(verticePartida,verticeDestino);
+        System.out.println(grafo.getRota());
         
         System.out.println("Indique qual o número da opção da rota que você escolheu");
         int numCaminho =escanear.nextInt();
         
         //Separa a string rota em partes e adiciona o vertice na lista de trechos
-        String[] adjacencia = rota[numCaminho].split("->");//separa em partes
+        
+        //String[] adjacencia = grafo.getRotas().get(numCaminho).split("->");//separa em partes
+        
+        String[] adjacencia = grafo.getRota().split("->");
         for (int i = 0; i < adjacencia.length; i++) {//Até o fim do vetor
-           String nomeVertice= adjacencia[i]; //indica o nome do vertice
-           int posicao= grafo.getVertices().getPosicao(nomeVertice); //pega a posicao do vertice na lista
-           Cidade vertice= grafo.getVertices().get(posicao).getConteudo(); //pega a instancia do vertice
-           trechos.add(vertice); //adiciona na lista de trechos
+          trechos.add(adjacencia[i]); //adiciona na lista de trechos
         }    
         System.out.println("A compra da sua passagem será realizada neste exato momento");
        
         //FUNCAO COMPRA DA PASSAGEM
+        grafo.realizarCompra(trechos);
+       
+        
         
     }
     

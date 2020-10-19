@@ -29,7 +29,7 @@ public class Trecho {
     private Cidade destino;
     private int tempoVoo;
     private String companhia;
-    private int quantPassagens;
+    private int quantPassagens=3;
 
     public Trecho(Cidade destino, int peso,String nomeCompanhia) {
         this.destino = destino;
@@ -101,12 +101,11 @@ public class Trecho {
     } 
     
     /**
-     * Método que altera a quantidade de passagens desse voo
+     * Método que diminui um na quantidade de passagens desse voo
      *
-     * @param quantPassagens- nova quantidade de passagens
      */
-    public void setQuantPassagens(int quantPassagens) {
-        this.quantPassagens = quantPassagens;
+    public void setQuantPassagens() {
+        this.quantPassagens= this.quantPassagens-1;
     }
     
     
