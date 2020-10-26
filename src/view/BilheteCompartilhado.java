@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.ComprasPassagens;
@@ -28,22 +29,20 @@ public class BilheteCompartilhado {
     public static void main(String[] args) throws IOException, InterruptedException{
         Grafo grafo = Grafo.getInstance();
         grafo.importarArquivo("Cidades.txt");
-        
-        ComprasPassagens cp1= new ComprasPassagens();
-        ComprasPassagens cp2= new ComprasPassagens();
-        ComprasPassagens cp3= new ComprasPassagens();
-        ComprasPassagens cp4= new ComprasPassagens();
+        Semaphore semaforo = new Semaphore(3);
+        ComprasPassagens cp1= new ComprasPassagens(semaforo,1,0,14);
+        ComprasPassagens cp2= new ComprasPassagens(semaforo,2,0,14);
+        ComprasPassagens cp3= new ComprasPassagens(semaforo,3,0,14);
+        ComprasPassagens cp4= new ComprasPassagens(semaforo,4,0,14);
        
         cp1.start();
         cp2.start();
         cp3.start();
         cp4.start();
-        
-        
+       
         cp1.join();
         cp2.join();
         cp3.join();
         cp4.join();
-        
     }
 }

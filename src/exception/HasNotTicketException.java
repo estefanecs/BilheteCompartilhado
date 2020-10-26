@@ -1,7 +1,7 @@
 /**
  * Componente Curricular: Módulo Integrado de Programação
- * Autor: Estéfane Carmo de Souza
- * Data: 23-09-2019
+ * Autor: Estéfane Carmo de Souza e Messias Jr. Lira da Silva
+ * Data: 26-10-2019
  *
  * Declaro que este código foi elaborado por mim de forma individual e
  * não contém nenhum trecho de código de outro colega ou de outro autor,
@@ -14,15 +14,15 @@
  */
 package exception;
 /**
- * Exceção lançada quando o usuário tentar inserir um estacionamento, mesmo já
- * existindo um no sistema.
- *
+ * Exceção lançada quando o usuário tentar comprar uma passagem que já acabou
+ * 
  * @author Estéfane Carmo de Souza
+ * @author Messias Jr. Lira da Silva
  */
 
-public class hasParkingException extends Exception {
+public class HasNotTicketException extends Exception {
 
-    public hasParkingException() {
+    public HasNotTicketException() {
         super();
     }
 

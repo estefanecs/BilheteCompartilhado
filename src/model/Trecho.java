@@ -108,5 +108,8 @@ public class Trecho {
         this.quantPassagens= this.quantPassagens-1;
     }
     
+    public void devolverPassagens(){
+        this.quantPassagens= this.quantPassagens+1;
+    }
     
 }

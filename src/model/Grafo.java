@@ -14,7 +14,6 @@
  */
 package model;
 
-import exception.hasntParkingException;
 import util.ArestaList;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -430,28 +429,5 @@ public class Grafo {
             }
         }
     }
-    
-    public void realizarCompra(List<String> locais){
-        for(int i=0; i<locais.size()-1;i++){
-           int posicaoC1= this.getVertices().getPosicao(locais.get(i));//pega a posicao do vertice na lista
-           int posicaoC2=this.getVertices().get(posicaoC1).getConteudo().getAdjacencias().getPosicao(locais.get(i+1));
-           int passagensDisponiveis= this.getVertices().get(posicaoC1).getConteudo().getAdjacencias().getTrecho(posicaoC2).getQuantPassagens();
-           if(passagensDisponiveis>0){
-               System.out.println("passagens antes da compra "+passagensDisponiveis);
-               //diminui a quantidade de passagens
-               this.getVertices().get(posicaoC1).getConteudo().getAdjacencias().getTrecho(posicaoC2).setQuantPassagens();
-               passagensDisponiveis= this.getVertices().get(posicaoC1).getConteudo().getAdjacencias().getTrecho(posicaoC2).getQuantPassagens();
-               System.out.println("A compra do trecho "+locais.get(i)+" a "+locais.get(i+1)+" foi reaizada");
-                //Poderia salvar essa pasagem em algum lugar né?
-                System.out.println("Restam " +passagensDisponiveis+" passagens disponiveis de "+locais.get(i)+" para "+locais.get(i+1));
-           }
-           else{
-               //Adiciona em uma lista de espera, mas quem tem a lista de espera?
-           }
-           
-        }
-        
-    }
-    
-    
+      
 }
