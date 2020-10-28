@@ -42,28 +42,41 @@ public class ComprasPassagens extends Thread {
         this.cidadeDestino=cidadeDestino;
     }
     
-      public void realizarCompra(List<String> locais) throws InterruptedException{
-        for(int i=0; i<locais.size()-1;i++){
-            int posicaoC1= grafo.getVertices().getPosicao(locais.get(i));//pega a posicao do vertice na lista
-            int posicaoC2=grafo.getVertices().get(posicaoC1).getConteudo().getAdjacencias().getPosicao(locais.get(i+1));
+    public void verificarLocais() throws InterruptedException{
+        boolean isDisponivel=true;
+        for(int i=0; i<trechos.size()-1;i++){
+            int posicaoC1= grafo.getVertices().getPosicao(trechos.get(i));//pega a posicao do vertice na lista
+            int posicaoC2=grafo.getVertices().get(posicaoC1).getConteudo().getAdjacencias().getPosicao(trechos.get(i+1));
             int passagensDisponiveis= grafo.getVertices().get(posicaoC1).getConteudo().getAdjacencias().getTrecho(posicaoC2).getQuantPassagens();
-            if(passagensDisponiveis>0){
-                semaforo.acquire();
-                System.out.println("\nPassageiro "+numPassageiro+ ":passagens antes da compra "+passagensDisponiveis);
-                //diminui a quantidade de passagens
-                grafo.getVertices().get(posicaoC1).getConteudo().getAdjacencias().getTrecho(posicaoC2).setQuantPassagens();
-                passagensDisponiveis= grafo.getVertices().get(posicaoC1).getConteudo().getAdjacencias().getTrecho(posicaoC2).getQuantPassagens();
-                System.out.println("\nPassageiro "+numPassageiro+ "a compra do trecho "+locais.get(i)+" a "+locais.get(i+1)+" foi reaizada");
-                //Poderia salvar essa pasagem em algum lugar né?
-                System.out.println("\nRestam " +passagensDisponiveis+" passagens disponiveis de "+locais.get(i)+" para "+locais.get(i+1));
-                semaforo.release();
+            if(passagensDisponiveis<0){ //Se não tem passagens disponiveis
+                isDisponivel=false;
             }
-            else{
-                System.out.println("Passageiro "+numPassageiro+ " :Não existe passagens disponiveis de "+locais.get(i)+" para "+locais.get(i+1));
+        }
+        if(isDisponivel){
+      
+        }
+        else{
+            System.out.println("Passageiro "+numPassageiro+ " alguns locais escolhidos da sua viagem não há passagens no momento, aguarde!");
                //Adiciona em uma lista de espera, mas quem tem a lista de espera?
-           }
-        }   
+        }
     }
+    
+      public void realizarCompra() throws InterruptedException{
+        for(int i=0; i<trechos.size()-1;i++){
+            int posicaoC1= grafo.getVertices().getPosicao(trechos.get(i));//pega a posicao do vertice na lista
+            int posicaoC2=grafo.getVertices().get(posicaoC1).getConteudo().getAdjacencias().getPosicao(trechos.get(i+1));
+            int passagensDisponiveis= grafo.getVertices().get(posicaoC1).getConteudo().getAdjacencias().getTrecho(posicaoC2).getQuantPassagens();
+            semaforo.acquire();
+            System.out.println("\nPassageiro "+numPassageiro+ ":passagens antes da compra "+passagensDisponiveis);
+            //diminui a quantidade de passagens
+            grafo.getVertices().get(posicaoC1).getConteudo().getAdjacencias().getTrecho(posicaoC2).setQuantPassagens();
+            passagensDisponiveis= grafo.getVertices().get(posicaoC1).getConteudo().getAdjacencias().getTrecho(posicaoC2).getQuantPassagens();
+            System.out.println("\nPassageiro "+numPassageiro+ "a compra do trecho "+trechos.get(i)+" a "+trechos.get(i+1)+" foi reaizada");
+            System.out.println("\nRestam " +passagensDisponiveis+" passagens disponiveis de "+trechos.get(i)+" para "+trechos.get(i+1));
+            semaforo.release();
+        } 
+    }
+      
     public void liberarPassagens(){
         for(int i=0; i<trechos.size()-1;i++){
             int posicaoC1= grafo.getVertices().getPosicao(trechos.get(i));//pega a posicao do vertice na lista
@@ -110,7 +123,7 @@ public class ComprasPassagens extends Thread {
        
         try {
             //FUNCAO COMPRA DA PASSAGEM
-            this.realizarCompra(trechos);
+            this.realizarCompra();
         } catch (InterruptedException ex) {
             Logger.getLogger(ComprasPassagens.class.getName()).log(Level.SEVERE, null, ex);
         }
