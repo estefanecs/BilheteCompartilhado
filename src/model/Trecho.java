@@ -29,7 +29,7 @@ public class Trecho {
     private Cidade destino;
     private int tempoVoo;
     private String companhia;
-    private int quantPassagens=3;
+    private int quantPassagens=1;
 
     public Trecho(Cidade destino, int peso,String nomeCompanhia) {
         this.destino = destino;

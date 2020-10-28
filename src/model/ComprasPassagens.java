@@ -28,7 +28,7 @@ import java.util.logging.Logger;
  * @author Messias Jr. Lira da Silva
  */
 public class ComprasPassagens extends Thread {
-    public static List<String> trechos = new ArrayList<>();
+    private List<String> trechos = new ArrayList<>();
     private Grafo grafo= Grafo.getInstance();
     private Semaphore semaforo;
     private int numPassageiro;
@@ -42,52 +42,68 @@ public class ComprasPassagens extends Thread {
         this.cidadeDestino=cidadeDestino;
     }
     
-    public void verificarLocais() throws InterruptedException{
+    public boolean verificarLocais(){
         boolean isDisponivel=true;
+        int posicaoC1, posicaoC2, passagensDisponiveis;
+        System.out.println("\nPassageiro "+numPassageiro + ": trechos q possuo " +trechos.size());
         for(int i=0; i<trechos.size()-1;i++){
-            int posicaoC1= grafo.getVertices().getPosicao(trechos.get(i));//pega a posicao do vertice na lista
-            int posicaoC2=grafo.getVertices().get(posicaoC1).getConteudo().getAdjacencias().getPosicao(trechos.get(i+1));
-            int passagensDisponiveis= grafo.getVertices().get(posicaoC1).getConteudo().getAdjacencias().getTrecho(posicaoC2).getQuantPassagens();
-            if(passagensDisponiveis<0){ //Se não tem passagens disponiveis
-                isDisponivel=false;
+            System.out.println("\nPassageiro "+numPassageiro + ": entrei aqui " +i);
+            posicaoC1= grafo.getVertices().getPosicao(trechos.get(i));//pega a posicao do vertice na lista
+            posicaoC2=grafo.getVertices().get(posicaoC1).getConteudo().getAdjacencias().getPosicao(trechos.get(i+1));
+            if(posicaoC1!=-1 && posicaoC2!=-1){
+                System.out.println("\nPassageiro "+numPassageiro +"Os vertices "+trechos.get(i)+" "+trechos.get(i+1)+"sao adjacentes");
+                passagensDisponiveis= grafo.getVertices().get(posicaoC1).getConteudo().getAdjacencias().getTrecho(posicaoC2).getQuantPassagens();  
+                if(passagensDisponiveis==0){ //Se não tem passagens disponiveis
+                    isDisponivel=false;
+                }
+            }
+            else{
+                System.out.println("\nPassageiro "+numPassageiro +" Nao encontrei os vertices");
             }
         }
         if(isDisponivel){
-      
+            System.out.println("\nPassageiro "+numPassageiro + ": há passagens disponiveis");
         }
         else{
-            System.out.println("Passageiro "+numPassageiro+ " alguns locais escolhidos da sua viagem não há passagens no momento, aguarde!");
-               //Adiciona em uma lista de espera, mas quem tem a lista de espera?
+            System.out.println("\nPassageiro "+numPassageiro + ": não há passagens disponiveis");
         }
+        return isDisponivel;
     }
     
-      public void realizarCompra() throws InterruptedException{
+    public void realizarCompra() throws InterruptedException{
+        semaforo.acquire();
         for(int i=0; i<trechos.size()-1;i++){
             int posicaoC1= grafo.getVertices().getPosicao(trechos.get(i));//pega a posicao do vertice na lista
             int posicaoC2=grafo.getVertices().get(posicaoC1).getConteudo().getAdjacencias().getPosicao(trechos.get(i+1));
-            int passagensDisponiveis= grafo.getVertices().get(posicaoC1).getConteudo().getAdjacencias().getTrecho(posicaoC2).getQuantPassagens();
-            semaforo.acquire();
-            System.out.println("\nPassageiro "+numPassageiro+ ":passagens antes da compra "+passagensDisponiveis);
-            //diminui a quantidade de passagens
-            grafo.getVertices().get(posicaoC1).getConteudo().getAdjacencias().getTrecho(posicaoC2).setQuantPassagens();
-            passagensDisponiveis= grafo.getVertices().get(posicaoC1).getConteudo().getAdjacencias().getTrecho(posicaoC2).getQuantPassagens();
-            System.out.println("\nPassageiro "+numPassageiro+ "a compra do trecho "+trechos.get(i)+" a "+trechos.get(i+1)+" foi reaizada");
-            System.out.println("\nRestam " +passagensDisponiveis+" passagens disponiveis de "+trechos.get(i)+" para "+trechos.get(i+1));
-            semaforo.release();
-        } 
+            if(posicaoC1!=-1 && posicaoC2!=-1){
+                int passagensDisponiveis= grafo.getVertices().get(posicaoC1).getConteudo().getAdjacencias().getTrecho(posicaoC2).getQuantPassagens();
+                System.out.println("\nPassageiro "+numPassageiro+ ": passagens antes da compra "+passagensDisponiveis);
+                //diminui a quantidade de passagens
+                grafo.getVertices().get(posicaoC1).getConteudo().getAdjacencias().getTrecho(posicaoC2).setQuantPassagens();
+                passagensDisponiveis= grafo.getVertices().get(posicaoC1).getConteudo().getAdjacencias().getTrecho(posicaoC2).getQuantPassagens();
+                System.out.println("\nPassageiro "+numPassageiro+ ": a compra do trecho "+trechos.get(i)+" a "+trechos.get(i+1)+" foi reaizada");
+                System.out.println("\nRestam " +passagensDisponiveis+" passagens disponiveis de "+trechos.get(i)+" para "+trechos.get(i+1));
+            } 
+        }
+        semaforo.release();
     }
       
     public void liberarPassagens(){
+        System.out.println("\nPassageiro "+numPassageiro+ ": estou liberando as passagens");
         for(int i=0; i<trechos.size()-1;i++){
             int posicaoC1= grafo.getVertices().getPosicao(trechos.get(i));//pega a posicao do vertice na lista
             int posicaoC2=grafo.getVertices().get(posicaoC1).getConteudo().getAdjacencias().getPosicao(trechos.get(i+1));
-            grafo.getVertices().get(posicaoC1).getConteudo().getAdjacencias().getTrecho(posicaoC2).devolverPassagens();
+            if(posicaoC1!=-1 && posicaoC2!=-1){
+                grafo.getVertices().get(posicaoC1).getConteudo().getAdjacencias().getTrecho(posicaoC2).devolverPassagens();
+                int passagensDisponiveis= grafo.getVertices().get(posicaoC1).getConteudo().getAdjacencias().getTrecho(posicaoC2).getQuantPassagens();
+                System.out.println("\nPassageiro "+numPassageiro+ ": passagens"+passagensDisponiveis);
+            }
         }
     }
     
     @Override
     public void run() { 
-            /*Scanner escanear= new Scanner(System.in);
+          /*  Scanner escanear= new Scanner(System.in);
             System.out.println("Cidades disponíveis para voos");
             grafo.listarCidades();*/
             
@@ -116,24 +132,32 @@ public class ComprasPassagens extends Thread {
         //String[] adjacencia = grafo.getRotas().get(numCaminho).split("->");//separa em partes
         
         String[] adjacencia = grafo.getRota().split("->");
-        for (int i = 0; i < adjacencia.length; i++) {//Até o fim do vetor
+        System.out.println("\nPassageiro "+numPassageiro+ "tamanho adjacencia"+adjacencia.length);
+        for(int i = 0; i < adjacencia.length; i++) {//Até o fim do vetor
+           System.out.println("\nPassageiro "+numPassageiro+ "adjacencia "+i+" "+adjacencia[i]);
           trechos.add(adjacencia[i]); //adiciona na lista de trechos
         }    
         System.out.println("\nPassageiro "+numPassageiro+ ", a compra da sua passagem será realizada neste exato momento");
-       
-        try {
-            //FUNCAO COMPRA DA PASSAGEM
-            this.realizarCompra();
-        } catch (InterruptedException ex) {
-            Logger.getLogger(ComprasPassagens.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
-            ComprasPassagens.sleep(10);
-            this.liberarPassagens();
-        } catch (InterruptedException ex) {
-            Logger.getLogger(ComprasPassagens.class.getName()).log(Level.SEVERE, null, ex);
-        }
         
+       //Verifica se todos os destinos está disponivel
+       boolean isDisponiveis= verificarLocais();
+        if(isDisponiveis){ //Se os trechos estiverem disponiveis
+            try {
+                this.realizarCompra();
+            } catch (InterruptedException ex) {
+                Logger.getLogger(ComprasPassagens.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                ComprasPassagens.sleep(10);
+                this.liberarPassagens();
+            } catch (InterruptedException ex) {
+                Logger.getLogger(ComprasPassagens.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else{
+            System.out.println("Passageiro "+numPassageiro+ " alguns locais escolhidos da sua viagem não há passagens no momento, aguarde!");
+               //Adiciona em uma lista de espera, mas quem tem a lista de espera?
+        }
     }
     
 }

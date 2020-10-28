@@ -30,7 +30,7 @@ import util.VerticeListTest;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     ArestaListTeste.class,
-    ArestaTeste.class,
+    VooTeste.class,
     VerticeTeste.class,
     GrafoTeste.class,
     VerticeListTest.class,})

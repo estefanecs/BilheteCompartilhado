@@ -14,8 +14,7 @@
  */
 package model;
 
-import exception.hasntParkingException;
-import java.io.IOException;
+
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
@@ -251,7 +250,7 @@ public class GrafoTeste {
     }
     
     @Test
-    public void CalcularCaminho() throws hasntParkingException {
+    public void CalcularCaminho(){
         assertTrue(grafo.getVertices().isEmpty());
         grafo.addVertice("A");
         grafo.addVertice("B");
@@ -275,8 +274,8 @@ public class GrafoTeste {
 
         assertEquals(7, grafo.getVertices().size());
 
-        assertEquals("I->C->D->A\nO tempo do trajeto é de 15 horas", grafo.calcularRota("I", "A"));
-        assertEquals("E->C->I\nO tempo do trajeto é de 8 horas", grafo.calcularRota("E", "I"));
+        assertEquals("I->C->D->A", grafo.calcularRota("I", "A"));
+        assertEquals("E->C->I", grafo.calcularRota("E", "I"));
 
 
         grafo.removerAresta("B", "E");
