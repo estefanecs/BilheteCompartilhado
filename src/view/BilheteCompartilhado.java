@@ -6,6 +6,8 @@
 package view;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Semaphore;
 import model.ComprasPassagens;
 import model.Grafo;
@@ -23,19 +25,21 @@ public class BilheteCompartilhado {
         Grafo grafo = Grafo.getInstance();
         grafo.importarArquivo("Cidades.txt");
         Semaphore semaforo = new Semaphore(1);
-        ComprasPassagens cp1= new ComprasPassagens(semaforo,1,0,7);
-        ComprasPassagens cp2= new ComprasPassagens(semaforo,2,15,12);
-        ComprasPassagens cp3= new ComprasPassagens(semaforo,3,7,15);
-        ComprasPassagens cp4= new ComprasPassagens(semaforo,4,0,14);
-       
+        int vetor1[] = new int[] {0,15,7};
+        int vetor2[] = new int[] {15,7,12};
+        int vetor3[] = new int[] {7,12,0,15};
+        
+        ComprasPassagens cp1= new ComprasPassagens(semaforo,1,vetor1);
+        ComprasPassagens cp2= new ComprasPassagens(semaforo,2,vetor2);
+        ComprasPassagens cp3= new ComprasPassagens(semaforo,3,vetor3);
+    
         cp1.start();
         cp2.start();
         cp3.start();
-       // cp4.start();
-       
+     
         /*cp1.join();
         cp2.join();
         cp3.join();
-        cp4.join();*/
+       */
     }
 }

@@ -1,0 +1,23 @@
+Gol
+Rio_de_Janeiro
+Salvador 2 Sao_Luis 3 Sao_Paulo 1 Curitiba 1 Florianopolis 1
+Porto_Alegre
+Maceio 4 Joao_Pessoa 5 Brasilia 2 Vitoria 4 Fortaleza 4
+Belo_Horizonte
+Brasilia 1 Vitoria 1 Fortaleza 3 Goiania 1 Manaus 5
+Recife
+Salvador 1 Sao_Luis 2 Sao_Paulo 3 Curitiba 3 Florianopolis 4
+Manaus
+Salvador 5 Porto_Alegre 5 Rio_de_Janeiro 4 Sao_Luis 6
+Goiania
+Sao_Luis 4 Sao_Paulo 1 Curitiba 3 Florianopolis 3
+Fortaleza
+Maceio 2 Sao_Paulo 3 Salvador 2
+Vitoria
+Maceio 3 Salvador 1 Sao_Paulo 1
+Brasilia
+Florianopolis 2 Maceio 2 Sao_Luis 2
+Joao_Pessoa
+Maceio 1 Florianopolis 4 Rio_de_Janeiro 3 Belo_Horizonte 2
+Curitiba
+Belo_Horizonte 2 Porto_Alegre 1

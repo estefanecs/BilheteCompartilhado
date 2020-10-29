@@ -1,0 +1,25 @@
+Tam
+Salvador
+Joao_Pessoa 1 Brasilia 2 Goiania 2 Belo_Horizonte 2 Porto_Alegre 5
+Sao_Luis
+Joao_Pessoa 2 Vitoria 4 Fortaleza 1 Belo_Horizonte 3 Porto_Alegre 4
+Sao_Paulo
+Joao_Pessoa 3 Brasilia 2 Belo_Horizonte 1 Porto_Alegre 2 Manaus 4
+Curitiba
+Joao_Pessoa 4 Brasilia 2 Vitoria 2 Fortaleza 4 Manaus 3
+Florianopolis
+Vitoria 2 Fortaleza 4 Manaus 4 Belo_Horizonte 2 Porto_Alegre 1
+Maceio
+Goiania 3 Manaus 5 Recife 1 Belo_Horizonte 2 Rio_de_Janeiro 3
+Joao_Pessoa
+Recife 1
+Brasilia
+Recife 2 Rio_de_Janeiro 2
+Vitoria
+Recife 3 Rio_de_Janeiro 1
+Fortaleza
+Recife 1 Rio_de_Janeiro 3
+Goiania
+Recife 3 Porto_Alegre 3 Rio_de_Janeiro 2
+Manaus
+Recife 4

@@ -20,6 +20,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import util.VerticeList;
 import util.No;
 import util.Node;
@@ -177,7 +178,28 @@ public class Grafo {
             auxiliar = auxiliar.getNext();
         }
     }
-
+    
+    /**
+     * Método que calcula o menor caminho entre o estacionamento ao ponto de
+     * coleta e do ponto de coleta até o banco
+     *
+     * @param cidadesEscala
+     */
+    public void calcularRota(List<String> cidadesEscala) {
+        rota= cidadesEscala.get(0);
+        for(int i=0; i<cidadesEscala.size()-1;i++){
+            int posicaoC1= this.getVertices().getPosicao(cidadesEscala.get(i));//pega a posicao do vertice na lista
+            int posicaoC2=this.getVertices().get(posicaoC1).getConteudo().getAdjacencias().getPosicao(cidadesEscala.get(i+1));
+            if(posicaoC1!=-1 && posicaoC2!=-1){
+               rota= rota.concat("->"+cidadesEscala.get(i+1)); 
+            }
+            else{
+                System.out.println("Não existem voos cadastrados de "+cidadesEscala.get(i)+" a "+cidadesEscala.get(i+1));
+                rota=null;
+            }
+       }
+    }
+    
    /**
      * Método que calcula o menor caminho entre o estacionamento ao ponto de
      * coleta e do ponto de coleta até o banco
@@ -386,8 +408,8 @@ public class Grafo {
                 contador--;//decrementa no contador
             }
             importarArquivoCompanhia("Azul.txt");
-            importarArquivoCompanhia("Amarelo.txt");
-            importarArquivoCompanhia("Vermelho.txt");
+            importarArquivoCompanhia("Gol.txt");
+            importarArquivoCompanhia("Tam.txt");
         } catch (FileNotFoundException exception) {
             throw new IOException();
         } finally {
