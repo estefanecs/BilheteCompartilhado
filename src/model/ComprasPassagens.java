@@ -33,10 +33,8 @@ public class ComprasPassagens extends Thread {
     private Grafo grafo= Grafo.getInstance();
     private Semaphore semaforo;
     private int numPassageiro;
-   /* private int cidadePartida;
-    private int cidadeDestino;*/
     
-    public  ComprasPassagens(Semaphore semaforo, int numero,int[] numCidadesEscala){
+    public ComprasPassagens(Semaphore semaforo, int numero, int[] numCidadesEscala){
         this.semaforo= semaforo;
         numPassageiro= numero;
         this.numCidadesEscala=numCidadesEscala;
@@ -45,13 +43,18 @@ public class ComprasPassagens extends Thread {
     public boolean verificarLocais(){
         boolean isDisponivel=true;
         int posicaoC1, posicaoC2, passagensDisponiveis;
+        boolean trechoReservado=false;
         for(int i=0; i<trechos.size()-1;i++){
             posicaoC1= grafo.getVertices().getPosicao(trechos.get(i));//pega a posicao do vertice na lista
             posicaoC2=grafo.getVertices().get(posicaoC1).getConteudo().getAdjacencias().getPosicao(trechos.get(i+1));
             if(posicaoC1!=-1 && posicaoC2!=-1){
-                passagensDisponiveis= grafo.getVertices().get(posicaoC1).getConteudo().getAdjacencias().getTrecho(posicaoC2).getQuantPassagens();  
-                if(passagensDisponiveis==0){ //Se não tem passagens disponiveis
+                passagensDisponiveis= grafo.getVertices().get(posicaoC1).getConteudo().getAdjacencias().getTrecho(posicaoC2).getQuantPassagens(); 
+                trechoReservado=grafo.getVertices().get(posicaoC1).getConteudo().getAdjacencias().getTrecho(posicaoC2).isReservado();
+                if(passagensDisponiveis<=0 || trechoReservado==true){ //Se não tem passagens disponiveis
                     isDisponivel=false;
+                }
+                else{
+                    grafo.getVertices().get(posicaoC1).getConteudo().getAdjacencias().getTrecho(posicaoC2).setReservado(true);
                 }
             }
         }
@@ -84,54 +87,17 @@ public class ComprasPassagens extends Thread {
             int posicaoC2=grafo.getVertices().get(posicaoC1).getConteudo().getAdjacencias().getPosicao(trechos.get(i+1));
             if(posicaoC1!=-1 && posicaoC2!=-1){
                 grafo.getVertices().get(posicaoC1).getConteudo().getAdjacencias().getTrecho(posicaoC2).devolverPassagens();
+                grafo.getVertices().get(posicaoC1).getConteudo().getAdjacencias().getTrecho(posicaoC2).setReservado(false);
                 int passagensDisponiveis= grafo.getVertices().get(posicaoC1).getConteudo().getAdjacencias().getTrecho(posicaoC2).getQuantPassagens();
+                System.out.println("\n*********************************************************************************************");
                 System.out.println("Surgiram novas passagens. Há "+passagensDisponiveis+" passagem(ns) disponível(is) de "+trechos.get(i)+" para "+trechos.get(i+1));
+                System.out.println("*********************************************************************************************");
             }
         }
     }
     
     @Override
     public void run() { 
-          /*  List<String> cidadesEscala = new ArrayList<>();
-            Scanner escanear= new Scanner(System.in);
-            System.out.println("Cidades disponíveis para voos");
-            grafo.listarCidades();
-            
-            System.out.println("Passageiro "+numPassageiro+" , informe o número correpondente a cidade origem da sua viagem: ");
-            int cidadePartida =escanear.nextInt();
-            System.out.println("Passageiro "+numPassageiro+" , informe o número correpondente a cidade destino da sua viagem: ");
-            int cidadeDestino= escanear.nextInt();
-           
-            String verticePartida= grafo.getVertices().get(cidadePartida).getConteudo().getNome();
-            String verticeDestino= grafo.getVertices().get(cidadeDestino).getConteudo().getNome();
-                
-            System.out.println("Passageiro "+numPassageiro+"Digite 1 para um voo direto e 2 para voo com escalas");
-            int opcao= escanear.nextInt();
-            
-            if(opcao==1){
-               grafo.calcularRota(verticePartida,verticeDestino);
-            }
-            else if(opcao==2){
-                int cidade, continuar=1;
-                String nomeCidade;
-                cidadesEscala.add(verticePartida);
-                System.out.println("Cidades disponíveis para a escala");
-                grafo.listarCidades();
-                System.out.println("Passageiro "+numPassageiro+" informe o número da cidade que você deseja passar"
-                           + " durante o trajeto, não é necessário informar o local de partida e nem o destino");
-                while(continuar==1){
-                   System.out.println("Passageiro "+numPassageiro+" digite o número");
-                   cidade= escanear.nextInt();
-                   nomeCidade= grafo.getVertices().get(cidade).getConteudo().getNome();
-                   cidadesEscala.add(nomeCidade);
-                   System.out.println("Passageiro "+numPassageiro+"digite 1 para escolher mais cidades da escala e 0 se todas"
-                           +" as cidades da escala já foram escolhidas");
-                   continuar= escanear.nextInt();
-                }
-                cidadesEscala.add(verticeDestino);
-                grafo.calcularRota(cidadesEscala);
-            }*/
-          
         //Procura o nome das cidades que compõe a viagem
         int cidade;
         String nomeCidade;
@@ -140,13 +106,13 @@ public class ComprasPassagens extends Thread {
             cidade= numCidadesEscala[i];
             nomeCidade= grafo.getVertices().get(cidade).getConteudo().getNome();
             cidadesEscala.add(nomeCidade);        
-       }
+        }
  
         System.out.println("\nPassageiro "+numPassageiro+", a cidade origem da sua viagem é: "+cidadesEscala.get(0));
         System.out.println("\nPassageiro "+numPassageiro+", a cidade destino da sua viagem é: "+cidadesEscala.get(cidadesEscala.size()-1));
        
         grafo.calcularRota(cidadesEscala);
-        System.out.println("\nPassageiro "+numPassageiro+" a escala escolhida foi: " +grafo.getRota());
+        System.out.println("\nPassageiro "+numPassageiro+", a escala escolhida foi: " +grafo.getRota());
   
         if(grafo.getRota()!=null){
             String[] adjacencia = grafo.getRota().split("->");
@@ -159,7 +125,7 @@ public class ComprasPassagens extends Thread {
                System.out.println("\nPassageiro "+numPassageiro+ ", a compra da sua passagem será realizada neste exato momento");
                 try {
                     this.realizarCompra();
-                     System.out.println("\nPassageiro "+numPassageiro+ ", a compra da sua passagens foi realizada com sucesso!");
+                     System.out.println("\nPassageiro "+numPassageiro+ ", a compra da sua passagem foi realizada com sucesso!");
                 } catch (InterruptedException ex) {
                     Logger.getLogger(ComprasPassagens.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -171,12 +137,8 @@ public class ComprasPassagens extends Thread {
                 }
             }
             else{
-                System.out.println("Passageiro "+numPassageiro+ ", alguns locais escolhidos na sua viagem não há passagens no momento, aguarde!");
+                System.out.println("Passageiro "+numPassageiro+ ", alguns locais escolhidos na sua viagem não há passagens no momento, aguarde!");    
             }
-        }
-       
-        
-       
-    }
-    
+        }      
+    }    
 }

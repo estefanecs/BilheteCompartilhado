@@ -30,6 +30,7 @@ public class Trecho {
     private int tempoVoo;
     private String companhia;
     private int quantPassagens=1;
+    private boolean reservado=false;
 
     public Trecho(Cidade destino, int peso,String nomeCompanhia) {
         this.destino = destino;
@@ -111,5 +112,15 @@ public class Trecho {
     public void devolverPassagens(){
         this.quantPassagens= this.quantPassagens+1;
     }
+
+    public boolean isReservado() {
+        return reservado;
+    }
+
+    public void setReservado(boolean reservado) {
+        this.reservado = reservado;
+    }
+    
+    
     
 }

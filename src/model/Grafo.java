@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 import util.VerticeList;
 import util.No;
-import util.Node;
 
 /**
  * Esta classe armazena os dados de um grafo, no qual possui uma referência para
@@ -43,6 +42,7 @@ public class Grafo {
     private String rota;
     private String pontoPartida;
     private String pontoChegada;
+    private List<ComprasPassagens> filaEspera= new ArrayList<>();
 
     private Grafo(){
         vertices = new VerticeList();
@@ -161,22 +161,11 @@ public class Grafo {
             vertices.get(posicaoV2).getConteudo().getAdjacencias().remove(nome1);
         }
         //Se a ligação estiver na rota, atualiza a mesma
-        if (rota != null && (rota.contains(nome1 + " - " + nome2) || rota.contains(nome2 + " - " + nome1))) {
+        /*if (rota != null && (rota.contains(nome1 + " - " + nome2) || rota.contains(nome2 + " - " + nome1))) {
             rota = null;
             return calcularRota(this.pontoPartida, this.pontoChegada);
-        }
+        }*/
         return "";
-    }
-
-    /**
-     * Método que altera a visitação de todos os vértices para false
-     */
-    public void alterarVisitacao() {
-        Node auxiliar = vertices.getPrimeiro();
-        while (auxiliar != null) { //Enquanto não for o fim da lista
-            auxiliar.getConteudo().setVisitado(false); //altera a visitação
-            auxiliar = auxiliar.getNext();
-        }
     }
     
     /**
@@ -199,159 +188,6 @@ public class Grafo {
             }
        }
     }
-    
-   /**
-     * Método que calcula o menor caminho entre o estacionamento ao ponto de
-     * coleta e do ponto de coleta até o banco
-     *
-     * @param pontoColeta - o ponto de coleta
-     * @param banco - o banco
-     * @return String - a rota
-     */
-    public String calcularRota(String pontoColeta, String banco) {
-            //Salva os pontos 
-            this.pontoChegada = banco;
-            this.pontoPartida = pontoColeta;
-
-            vertices.procurarNo(pontoColeta).setVisitado(true);
-            int verticesVisitados = 1;
-
-            ArestaList caminho = new ArestaList();
-            this.relacionarVertices(caminho); //Salva o caminho do ponto de coleta para todos os outros vertices     
-            
-            Cidade verticeAtual;
-            int pesoAtual;
-            int menorDistancia = caminho.get(getMinimo(caminho)).getConteudo().getTempoVoo();
-            /*Enquanto não visitar todos os vertices e a menor distância for diferente de 1000, procura o menor
-            caminho para todos os vertices, independente de serem adjacentes ao ponto de coleta. */
-            while (verticesVisitados < vertices.size() && menorDistancia != 1000) {
-                verticesVisitados++;
-                int indexMin = getMinimo(caminho);//posicao do elemento com menor peso 
-                menorDistancia = caminho.get(indexMin).getConteudo().getTempoVoo(); //peso do menor elemento
-                if (menorDistancia != 1000) {
-                    //Atualiza a referência do vertice atual e do peso do mesmo, e altera para visitado
-                    verticeAtual = vertices.get(indexMin).getConteudo(); //Salva o vertice atual
-                    pesoAtual = caminho.get(indexMin).getConteudo().getTempoVoo(); //Salva o peso da aresta com o vertice atual
-                    vertices.get(indexMin).getConteudo().setVisitado(true); //Altera o vertice para visitado
-                    ajustarVertices(verticeAtual, pesoAtual, caminho); //Atualiza os valores da lista de caminhos
-                }
-            }
-            this.alterarVisitacao(); //Altera para não visitados todos os vertices
-            this.salvarRota(caminho); //salva a rota
-        return rota;
-    }
-
-    /**
-     * Método que analisa todas as adjacencias do ponto de coleta com os outros
-     * vertices. Salvando os caminhos existentes entre o ponto de coleta e os
-     * outros vertices. Se o vertice não for adjacente, a aresta recebe o peso
-     * 1000.
-     *
-     * @param caminho - lista de caminho
-     */
-    public void relacionarVertices(ArestaList caminho) {
-        Cidade verticeDestino = vertices.procurarNo(pontoPartida);
-        Node auxiliar = vertices.getPrimeiro();
-        Trecho aresta;
-        while (auxiliar != null) { //Enquanto não for o fim da lista
-            //procura se o vertice atual é adjacente ao ponto de coleta
-            int posicao = auxiliar.getConteudo().getAdjacencias().getPosicao(pontoPartida);
-            if (posicao == -1) { //Se não for adjacente
-                //a aresta é salva com o valor 1000, o que indica que não há caminho do ponto de coleta para o vertice
-                aresta = new Trecho(verticeDestino, 1000,"semAdjacencia");
-            } else { //Se forem adjacentes, salva a aresta contendo o ponto de coleta como destino e o peso entre eles
-                aresta = new Trecho(verticeDestino, auxiliar.getConteudo().getAdjacencias().get(posicao).getConteudo().getTempoVoo(),auxiliar.getConteudo().getAdjacencias().get(posicao).getConteudo().getCompanhia());
-            }
-            caminho.add(aresta); //Adiciona a aresta
-            auxiliar = auxiliar.getNext(); //Aponta para o próximo nó da lista de vertices
-        }
-    }
-
-    /**
-     * Método que procura o menor peso da lista de caminho
-     *
-     * @param caminho - lista com o caminho
-     * @return posicao - posicao do objeto com menor peso
-     */
-    private int getMinimo(ArestaList caminho) {
-        int valorMinimo = 1000;
-        int posicao = 0;
-        for (int i = 0; i < vertices.size(); i++) { //percorre toda lista
-            //Se o nó atual for menor, salva o peso e a posição
-            if (!vertices.get(i).getConteudo().isVisitado() && caminho.get(i).getConteudo().getTempoVoo() < valorMinimo) {
-                valorMinimo = caminho.get(i).getConteudo().getTempoVoo();
-                posicao = i;
-            }
-        }
-        return posicao;
-    }
-
-    /**
-     * Método que atualiza as distâncias mais curtas para todos os vertices
-     * conhecidos atualmente
-     *
-     * @param verticeAtual - vertice atual
-     * @param pesoAtual - peso para chegar até o vertice atual
-     * @param caminho - lista de caminho
-     */
-    private void ajustarVertices(Cidade verticeAtual, int pesoAtual, ArestaList caminho) {
-        int coluna = 0;
-        int peso = 0;
-        while (coluna < vertices.size()) { //Enquanto não percorrer a lista toda
-            if (!vertices.get(coluna).getConteudo().isVisitado()) { //Se o vertice não for visitado
-                //procura a posição do vertice atual(Se esse vertice é adjacente ao atual)
-                int posicao = vertices.get(coluna).getConteudo().getAdjacencias().getPosicao(verticeAtual.getNome());
-                if (posicao != -1) { //Se forem adjacentes, salva o peso entre ele e o vertice atual 
-                    peso = vertices.get(coluna).getConteudo().getAdjacencias().get(posicao).getConteudo().getTempoVoo();
-                } else {
-                    peso = 1000;
-                }
-                int pesoAtualizado = peso + pesoAtual; //soma o peso para chegar até ele partindo do ponto de coleta
-                int pesoAntigo = caminho.get(coluna).getConteudo().getTempoVoo();
-                if (pesoAtualizado < pesoAntigo) { //Se o peso atualizado for menor do que o anterior
-                    caminho.get(coluna).getConteudo().setDestino(verticeAtual); //altera o ponto de destino até ele
-                    caminho.get(coluna).getConteudo().setTempoVoo(pesoAtualizado); //altera o peso do caminho
-                }
-            }
-            coluna++; //passa para o próximo vertice
-        }
-    }
-
-      /**
-     * Método que salva a rota e o tempo da rota
-     *
-     * @param caminho - a lista com os caminho para todos os vertices
-     */
-    private void salvarRota(ArestaList caminho) {
-        rotaPartidaADestino(caminho);
-    }
-      /**
-     * Método que salva a rota do ponto de coleta até o banco
-     *
-     * @param tempoRota - tempo da rota até o momento
-     * @param caminho - lista de caminhos
-     */
-    private void rotaPartidaADestino(ArestaList caminho) {
-        int posicao = vertices.getPosicao(pontoChegada);
-        No auxiliar = caminho.get(posicao);
-        int tempoRota = caminho.get(posicao).getConteudo().getTempoVoo(); //soma o tempo para chegar no ponto de chegada
-        rota= pontoPartida;
-        String invertida = "->" + pontoChegada;
-        //Enquanto o vertice destino não for o ponto de coleta e o grafo não for desconexo
-        while (auxiliar.getConteudo().getDestino().getNome().compareToIgnoreCase(pontoPartida) != 0 && auxiliar.getConteudo().getTempoVoo() != 1000) {
-            String stringAuxiliar = "->" + auxiliar.getConteudo().getDestino().getNome(); //escreve o vertice destino
-            invertida = stringAuxiliar.concat(invertida);
-            //Aponta para o vertice destino na lista
-            posicao = vertices.getPosicao(auxiliar.getConteudo().getDestino().getNome());
-            auxiliar = caminho.get(posicao);
-        }
-        if (auxiliar.getConteudo().getTempoVoo() != 1000) //Se é possível chegar no ponto de coleta, escreve o mesmo
-        {
-            rota = rota.concat(invertida /*+ "\nO tempo do trajeto é de " + tempoRota + " horas"*/);
-        } else {
-            rota = "Não existem caminhos para " + pontoPartida;
-        }
-    }
          
     /**
      * Método que remove todos os vertices do grafo
@@ -361,22 +197,7 @@ public class Grafo {
             vertices.setPrimeiro(vertices.getPrimeiro().getNext());
         }
     }
-    
-   
-    public String listarRotas(){
-        String texto="";
-        int count=0;
-        Cidade origemAux;
-        for(int i=0; i<vertices.size();i++){
-            origemAux = vertices.get(i).getConteudo();
-            for(int j=0; j<origemAux.getAdjacencias().size(); j++){
-                count++;
-                texto+=(count+". "+origemAux.getNome()+"->"+origemAux.getAdjacencias().get(j).getConteudo().getDestino().getNome()+
-                        " - "+ origemAux.getAdjacencias().get(j).getConteudo().getCompanhia()+"\n");
-            }
-        }
-        return texto;
-    }
+  
     public void listarCidades(){
         ArrayList<String> lista = this.getVertices().listarTodosPontos();
         for(int i=0; i<lista.size();i++){
