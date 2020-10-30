@@ -1,7 +1,7 @@
 /**
- * Componente Curricular: Módulo Integrado de Programação
- * Autor: Estéfane Carmo de Souza
- * Data: 24-08-2019
+ * Componente Curricular: Sistemas Operacionais
+ * Autor: Estéfane Carmo de Souza e Messias Jr. Lira da Silva
+ * Data: 30-10-2020
  *
  * Declaro que este código foi elaborado por mim de forma individual e
  * não contém nenhum trecho de código de outro colega ou de outro autor,
@@ -15,14 +15,15 @@
 package util;
 
 /**
- * Classe para objetos do tipo VerticeList. Esta classe, possui uma referência
+ * Classe para objetos do tipo CidadeList. Esta classe, possui uma referência
  * para o primeiro nó da lista.
  *
  * Exemplo de uso:
  *
- * VerticeList lista = new VerticeList();
+ * CidadeList lista = new CidadeList();
  *
  * @author Estéfane Carmo de Souza 
+ * @author Messias Jr. Lira da Silva
  */
 import java.util.ArrayList;
 import model.Cidade;
@@ -48,17 +49,17 @@ public class CidadeList {
     }
 
     /**
-     * Método que procura o vertice com o nome indicado
+     * Método que procura o cidade com o nome indicado
      *
-     * @param vertice - nome do vertice
-     * @return Cidade - o vertice encontrado
+     * @param cidade - nome da cidade
+     * @return Cidade - a cidade encontrada
      */
-    public Cidade procurarNo(String vertice) {
+    public Cidade procurarNo(String cidade) {
         Node auxiliar = primeiro;
         Cidade encontrado = null;
         while (auxiliar != null) { //Enquanto não for o fim da lista
-            if (auxiliar.getConteudo().getNome().compareToIgnoreCase(vertice) == 0) { //se o nó atual for o desejado
-                encontrado = auxiliar.getConteudo(); //encontrado é igual ao vertice encontrado
+            if (auxiliar.getConteudo().getNome().compareToIgnoreCase(cidade) == 0) { //se o nó atual for o desejado
+                encontrado = auxiliar.getConteudo(); //encontrado é igual a cidade encontrada
             }
             auxiliar = auxiliar.getNext();
         }
@@ -66,23 +67,23 @@ public class CidadeList {
     }
 
     /**
-     * Método que obtém a posição de um vertice
+     * Método que obtém a posição de uma cidade
      *
-     * @param vertice - nome do vertice a ser procurado
+     * @param cidade - nome da cidade a ser procurada
      * @return int - posicao
      */
-    public int getPosicao(String vertice) {
+    public int getPosicao(String cidade) {
         Node aux = primeiro;
         int posicao = 0;
         while (aux != null) {//enquanto não for o final da lista
-            //se o vertice atual possuir o mesmo nome, retorna a posicao
-            if (aux.getConteudo().getNome().compareToIgnoreCase(vertice) == 0) {
+            //se o cidade atual possuir o mesmo nome, retorna a posicao
+            if (aux.getConteudo().getNome().compareToIgnoreCase(cidade) == 0) {
                 return posicao;
             }
             aux = aux.getNext();
             posicao++;
         }
-        return -1;
+        return -1; //retorna -1 se não encontrou a cidade com o nome indicado
     }
 
     /**
@@ -149,10 +150,10 @@ public class CidadeList {
     }
 
     /**
-     * Método para a remorção de um vertice cujo o nome foi indicado
+     * Método para a remorção de uma cidade cujo o nome foi indicado
      *
-     * @param nome - nome do vertice a ser removido
-     * @return Cidade - o vertice removido
+     * @param nome - nome da cidade a ser removida
+     * @return Cidade - a cidadee removida
      */
     public Cidade remove(String nome) {
         if (!this.isEmpty()) {
@@ -161,7 +162,7 @@ public class CidadeList {
             if (primeiro.getConteudo().getNome().compareToIgnoreCase(nome) == 0) { //se for o primeiro elemento
                 primeiro = primeiro.getNext();
                 return aux.getConteudo();
-            } else {//se não, procura até que seja o fim da lista ou encontrar o vertice com o mesmo nome
+            } else {//se não, procura até que seja o fim da lista ou encontrar a cidade com o mesmo nome
                 while (aux2 != null && aux2.getConteudo().getNome().compareToIgnoreCase(nome) != 0) {
                     aux = aux2;
                     aux2 = aux2.getNext();
@@ -174,10 +175,11 @@ public class CidadeList {
         }
         return null;
     }
-        /**
-     * Método que lista todos os vertices da lista
+    
+    /**
+     * Método que lista todos as cidades da lista
      *
-     * @return ArrayList- lista contendo os pontos
+     * @return ArrayList- lista contendo o nome das cidades
      */
     public ArrayList listarTodosPontos() {
         Node auxiliar = this.getPrimeiro();

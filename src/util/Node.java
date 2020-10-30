@@ -1,7 +1,7 @@
 /**
- * Componente Curricular: Módulo Integrado de Programação
- * Autor: Estéfane Carmo de Souza
- * Data: 24-08-2019
+ * Componente Curricular: Sistemas Operacionais
+ * Autor: Estéfane Carmo de Souza e Messias Jr. Lira da Silva
+ * Data: 30-10-2020
  *
  * Declaro que este código foi elaborado por mim de forma individual e
  * não contém nenhum trecho de código de outro colega ou de outro autor,
@@ -25,6 +25,7 @@ import model.Cidade;
  * Node node= new Node("conteudo");
  *
  * @author Estéfane Carmo de Souza
+ * @author Messias Jr. Lira da Silva
  */
 public class Node {
 
@@ -50,7 +51,7 @@ public class Node {
     /**
      * Método que obtém o conteúdo do Nó
      *
-     * @return Object - O conteúdo
+     * @return Cidade - O conteúdo
      */
     public Cidade getConteudo() {
         return conteudo;

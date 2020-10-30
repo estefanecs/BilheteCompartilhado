@@ -1,7 +1,7 @@
 /**
- * Componente Curricular: Módulo Integrado de Programação
- * Autor: Estéfane Carmo de Souza
- * Data: 24-08-2019
+ * Componente Curricular: Sistemas Operacionais
+ * Autor: Estéfane Carmo de Souza e Messias Jr. Lira da Silva
+ * Data: 30-10-2020
  *
  * Declaro que este código foi elaborado por mim de forma individual e
  * não contém nenhum trecho de código de outro colega ou de outro autor,
@@ -26,6 +26,7 @@ import model.Cidade;
  TrechoList lista = new TrechoList();
  *
  * @author Estéfane Carmo de Souza
+ * @author Messias Jr. Lira da Silva
  */
 public class TrechoList {
 
@@ -135,30 +136,30 @@ public class TrechoList {
     }
 
     /**
-     * Método que obtém a posição de um vertice
+     * Método que obtém a posição de um cidade
      *
-     * @param vertice - nome do vertice a ser procurado
+     * @param cidade - nome do cidade a ser procurado
      * @return int - posicao
      */
-    public int getPosicao(String vertice) {
+    public int getPosicao(String cidade) {
         No aux = primeiro;
         int posicao = 0;
         while (aux != null) { //enquanto não for o final da lista
-            //se o vertice atual possuir o mesmo nome, retorna a posicao
-            if (aux.getConteudo().getDestino().getNome().compareToIgnoreCase(vertice) == 0) {
+            //se o cidade atual possuir o mesmo nome, retorna a posicao
+            if (aux.getConteudo().getDestino().getNome().compareToIgnoreCase(cidade) == 0) {
                 return posicao;
             }
             aux = aux.getNext();
             posicao++;
         }
-        return -1;
+        return -1; //retorna -1 se não encontrou a cidade com o nome indicado
     }
 
     /**
-     * Método para a remorção de um vertice cujo o nome foi indicado
+     * Método para a remorção de uma cidade cujo o nome foi indicado
      *
-     * @param nome - nome do vertice a ser removido
-     * @return Cidade - o vertice removido
+     * @param nome - nome da cidade a ser removida
+     * @return Cidade - a cidade removida
      */
     public Cidade remove(String nome) {
         if (!this.isEmpty()) {
@@ -167,13 +168,13 @@ public class TrechoList {
             if (primeiro.getConteudo().getDestino().getNome().compareToIgnoreCase(nome) == 0) { //se for o primeiro elemento
                 primeiro = primeiro.getNext();
                 return aux.getConteudo().getDestino();
-            } else { //se não, procura até que seja o fim da lista ou encontrar o vertice com o mesmo nome
+            } else { //se não, procura até que seja o fim da lista ou encontrar a cidade com o mesmo nome
                 while (aux2 != null && aux2.getConteudo().getDestino().getNome().compareToIgnoreCase(nome) != 0) {
                     aux = aux2;
                     aux2 = aux2.getNext();
                 }
             }
-            if (aux2 != null) { //se encontrar, retorna o vertice
+            if (aux2 != null) { //se encontrar, retorna a cidade
                 aux.setNext(aux2.getNext());
                 return aux2.getConteudo().getDestino();
             }

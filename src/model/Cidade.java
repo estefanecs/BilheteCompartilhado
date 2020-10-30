@@ -17,13 +17,12 @@ package model;
 import util.TrechoList;
 
 /**
- * Esta classe armazena os dados de um vertice, bem como o nome,  se o
- * vertice foi visitado ou não e armazena a lista de adjacências que o o vertice
- * possui.
+ * Esta classe armazena os dados de uma cidade, bem como o nome,
+ * armazena a lista de adjacências que a cidade possui.
  *
  * Exemplo de uso:
 
- Cidade vertice= new Cidade(nome, tipo);
+ Cidade cidade= new Cidade(nome);
  *
  * @author Estéfane Carmo de Souza 
  * @author Messias Jr. Lira da Silva
@@ -31,17 +30,15 @@ import util.TrechoList;
 public class Cidade {
 
     private String nome;
-    private boolean visitado;
     private TrechoList adjacencias;
 
     public Cidade(String nome) {
         this.nome = nome;
-        this.visitado = false;
         this.adjacencias = new TrechoList();
     }
 
     /**
-     * Método que obtém o nome do vértice
+     * Método que obtém o nome da cidade
      *
      * @return String - nome
      */
@@ -50,7 +47,7 @@ public class Cidade {
     }
 
     /**
-     * Método que altera o nome do vértice
+     * Método que altera o nome da cidade
      *
      * @param nome - o novo nome
      */
@@ -59,25 +56,7 @@ public class Cidade {
     }
 
     /**
-     * Método que obtém se o vertice foi visitado
-     *
-     * @return true - se estiver visitado
-     */
-    public boolean isVisitado() {
-        return visitado;
-    }
-
-    /**
-     * Método que altera a visitação do vértice
-     *
-     * @param visitado - nova visitação do vertice
-     */
-    public void setVisitado(boolean visitado) {
-        this.visitado = visitado;
-    }
-
-    /**
-     * Método que obtem a lista de adjacência do vértice
+     * Método que obtem a lista de adjacência da cidade
      *
      * @return TrechoList - lista de adjacencias;
      */
