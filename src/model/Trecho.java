@@ -121,6 +121,9 @@ public class Trecho {
         this.reservado = reservado;
     }
     
-    
+    @Override
+    public String toString(){
+        return ("\tCompanhia: "+this.companhia + "\tTempo de vôo: "+ this.tempoVoo+ " horas");
+    }
     
 }

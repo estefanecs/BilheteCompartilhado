@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Semaphore;
-import model.ComprasPassagens;
+import model.Passageiro;
 import model.Grafo;
 
 /**
@@ -33,12 +33,12 @@ public class BilheteCompartilhado {
         int vetor5[] = new int[] {6,1,5};
         int vetor6[] = new int[] {1,5,6};
         
-        ComprasPassagens cp1= new ComprasPassagens(semaforo,1,vetor1);
-        ComprasPassagens cp2= new ComprasPassagens(semaforo,2,vetor2);
-        ComprasPassagens cp3= new ComprasPassagens(semaforo,3,vetor3);
-        ComprasPassagens cp4= new ComprasPassagens(semaforo,1,vetor4);
-        ComprasPassagens cp5= new ComprasPassagens(semaforo,2,vetor5);
-        ComprasPassagens cp6= new ComprasPassagens(semaforo,3,vetor6);
+        Passageiro cp1= new Passageiro(semaforo,1,vetor1);
+        Passageiro cp2= new Passageiro(semaforo,2,vetor2);
+        Passageiro cp3= new Passageiro(semaforo,3,vetor3);
+        Passageiro cp4= new Passageiro(semaforo,4,vetor4);
+        Passageiro cp5= new Passageiro(semaforo,5,vetor5);
+        Passageiro cp6= new Passageiro(semaforo,6,vetor6);
     
         cp1.start();
         cp2.start();

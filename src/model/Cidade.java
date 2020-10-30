@@ -14,7 +14,7 @@
  */
 package model;
 
-import util.ArestaList;
+import util.TrechoList;
 
 /**
  * Esta classe armazena os dados de um vertice, bem como o nome,  se o
@@ -32,12 +32,12 @@ public class Cidade {
 
     private String nome;
     private boolean visitado;
-    private ArestaList adjacencias;
+    private TrechoList adjacencias;
 
     public Cidade(String nome) {
         this.nome = nome;
         this.visitado = false;
-        this.adjacencias = new ArestaList();
+        this.adjacencias = new TrechoList();
     }
 
     /**
@@ -79,9 +79,9 @@ public class Cidade {
     /**
      * Método que obtem a lista de adjacência do vértice
      *
-     * @return ArestaList - lista de adjacencias;
+     * @return TrechoList - lista de adjacencias;
      */
-    public ArestaList getAdjacencias() {
+    public TrechoList getAdjacencias() {
         return adjacencias;
     }
 

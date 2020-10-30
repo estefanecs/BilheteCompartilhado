@@ -22,7 +22,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
-import util.ArestaList;
+import util.TrechoList;
 
 /**
  * Classe teste para a estrutura de dados lista, que armazena objetos do tipo
@@ -32,13 +32,13 @@ import util.ArestaList;
  */
 public class ArestaListTeste {
 
-    private ArestaList list;
+    private TrechoList list;
     private Cidade v1, v2, v3;
     private Trecho aresta1, aresta2, aresta3;
 
     @Before
     public void setUp() {
-        list = new ArestaList();
+        list = new TrechoList();
         v1 = new Cidade("A");
         v2 = new Cidade("B");
         v3 = new Cidade("C");

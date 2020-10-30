@@ -14,14 +14,14 @@
  */
 package model;
 
-import util.ArestaList;
+import util.TrechoList;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import util.VerticeList;
+import util.CidadeList;
 import util.No;
 
 /**
@@ -38,14 +38,14 @@ import util.No;
 public class Grafo {
 
     private static Grafo instancia;
-    private VerticeList vertices;
+    private CidadeList vertices;
     private String rota;
     private String pontoPartida;
     private String pontoChegada;
-    private List<ComprasPassagens> filaEspera= new ArrayList<>();
+    private List<Passageiro> filaEspera= new ArrayList<>();
 
     private Grafo(){
-        vertices = new VerticeList();
+        vertices = new CidadeList();
         rota = null;
         pontoPartida = null;
         pontoChegada = null;
@@ -67,9 +67,9 @@ public class Grafo {
     /**
      * Método que obtém a lista de vértices do grafo
      *
-     * @return VerticeList - a lista
+     * @return CidadeList - a lista
      */
-    public VerticeList getVertices() {
+    public CidadeList getVertices() {
         return vertices;
     }
 
@@ -188,6 +188,21 @@ public class Grafo {
             }
        }
     }
+    
+    public String sobreRota(){
+        int tempo=0;
+        String texto = "";
+        String[] cidades = rota.split("->");
+        for(int i=0; i<cidades.length-1; i++){
+            int posicaoC1= this.getVertices().getPosicao(cidades[i]);//pega a posicao do vertice na lista
+            int posicaoC2=this.getVertices().get(posicaoC1).getConteudo().getAdjacencias().getPosicao(cidades[i+1]);
+            Trecho trecho =this.getVertices().get(posicaoC1).getConteudo().getAdjacencias().getTrecho(posicaoC2);
+            tempo += trecho.getTempoVoo();
+            texto += cidades[i]+"->"+cidades[i+1]+trecho.toString()+"\n";
+        }
+        texto+="Tempo total de vôo: "+tempo+ " horas"; 
+        return texto ;
+    }
          
     /**
      * Método que remove todos os vertices do grafo
@@ -219,7 +234,6 @@ public class Grafo {
         BufferedReader ler = null;
         int contador = 0;
         try {
-  
             ler = new BufferedReader(new FileReader(nomeArquivo));
             contador = Integer.parseInt(ler.readLine());
             while (contador > 0) {//enquanto contador for maior que 0

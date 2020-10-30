@@ -21,7 +21,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
-import util.VerticeList;
+import util.CidadeList;
 
 /**
  * Classe teste para a estrutura de dados lista, que armazena objetos do tipo
@@ -31,12 +31,12 @@ import util.VerticeList;
  */
 public class VerticeListTest {
 
-    private VerticeList list;
+    private CidadeList list;
     private Cidade vertice1, vertice2, vertice3;
 
     @Before
     public void setUp() {
-        list = new VerticeList();
+        list = new CidadeList();
         vertice1 = new Cidade("A");
         vertice2 = new Cidade("B");
         vertice3 = new Cidade("C");
